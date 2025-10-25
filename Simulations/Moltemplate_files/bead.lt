@@ -1,0 +1,7 @@
+# bead.lt — Defines a single bead type for a Kremer–Grest polymer model
+
+Bead {
+  write("Data Atoms") {
+    $atom:bead  $mol:...  @atom:type:1  0.0  0.0  0.0  0.0
+  }
+}

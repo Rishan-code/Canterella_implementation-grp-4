@@ -1,0 +1,47 @@
+# --- 1. Initialization ---
+units           lj
+atom_style      molecular
+boundary        p p p
+log             log.lammps
+
+# --- 2. System Definition ---
+# Ensure 'system.data' defines the tetracyclic topology:
+# - Two rings (each closed loop of beads)
+# - Two bridges connecting the rings
+read_data       tetracyclic.data
+
+# --- 3. Force Field Definition (Kremer–Grest Model) ---
+# Non-bonded WCA (repulsive Lennard-Jones)
+pair_style      lj/cut 1.12246
+pair_coeff      1 1 1.0 1.0  # epsilon=1.0, sigma=1.0
+
+# Bonded FENE potential for polymer connectivity
+bond_style      fene
+bond_coeff      1 30.0 1.5 1.0 1.0  # K=30, R0=1.5, epsilon=1.0, sigma=1.0
+special_bonds   lj 0.0 1.0 1.0
+
+# --- 4. Neighbor and Integration Settings ---
+neighbor        0.3 bin
+neigh_modify    every 1 delay 0 check yes
+
+timestep        0.005
+
+# --- 5. Thermostat (NVT Ensemble) ---
+fix             1 all nvt temp 1.0 1.0 0.1
+
+# --- 6. Outputs ---
+thermo          1000
+thermo_style    custom step temp pe ke etotal press
+
+# Radius of gyration (Rg)
+compute         Rg all gyration
+fix             Rg_out all ave/time 1000 1 1000 c_Rg file Rg_data.dat
+
+# Trajectory output for visualization (e.g., OVITO)
+dump            1 all custom 10000 traj.lammpstrj id type x y z
+
+# --- 7. Simulation ---
+run             50000       # Equilibration
+run             500000      # Production
+
+print "✅ Tetracyclic polymer simulation completed successfully!"
