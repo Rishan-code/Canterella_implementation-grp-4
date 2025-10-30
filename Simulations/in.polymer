@@ -8,7 +8,7 @@ log             log.lammps
 # Ensure 'system.data' defines the tetracyclic topology:
 # - Two rings (each closed loop of beads)
 # - Two bridges connecting the rings
-read_data       tetracyclic.data
+read_data       Moltemplate_files/system.lt
 
 # --- 3. Force Field Definition (Kremer–Grest Model) ---
 # Non-bonded WCA (repulsive Lennard-Jones)
