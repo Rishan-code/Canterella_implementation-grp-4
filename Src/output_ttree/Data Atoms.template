@@ -1,0 +1,6 @@
+$/atom:Edge1/A @/atom:Edge/C 0.0 0.0 0.0
+$/atom:Edge1/B @/atom:Edge/C 1.5 0.0 0.0
+$/atom:Loop1/E @/atom:Loop/C 0.0 0.0 0.0
+$/atom:Loop1/F @/atom:Loop/C 1.5 0.0 0.0
+$/atom:Loop2/E @/atom:Loop/C 0.0 0.0 -2.0
+$/atom:Loop2/F @/atom:Loop/C 1.5 0.0 -2.0

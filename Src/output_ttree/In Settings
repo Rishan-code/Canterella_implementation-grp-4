@@ -1,0 +1,2 @@
+  pair_style lj/cut 10.0
+  bond_style harmonic

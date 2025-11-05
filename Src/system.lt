@@ -1,16 +1,37 @@
 import "edge.lt"
 import "loop.lt"
 
-# Instantiate molecules
-Edge1  = new Edge
-Loop1  = new Loop        # at z=+1 (as defined)
-Loop2  = new Loop.move(0.0, 0.0, -2.000)  # second loop shifted to z=-1
+# --- Instantiate molecules ---
+Edge1 = new Edge
+Loop1 = new Loop
+Loop2 = new Loop.move(0.0, 0.0, -2.0)
 
-# Connect the loops to the edge endpoints (A and B)
+# --- Global settings ---
+write_once("In Init") {
+  units real
+  atom_style atomic
+  boundary p p p
+}
+
+write_once("In Settings") {
+  pair_style lj/cut 10.0
+  bond_style harmonic
+}
+
+write_once("Data Boundary") {
+  0.0  50.0 xlo xhi
+  0.0  50.0 ylo yhi
+  -10.0  10.0 zlo zhi
+}
+
+# --- Connect loops to the edge endpoints ---
 write("Data Bonds") {
-    # bond-tag  bond-type  atom1          atom2
-    $bond:AE1 @bond:b1   $atom:Edge1/A   $atom:Loop1/E
-    $bond:BF1 @bond:b1   $atom:Edge1/B   $atom:Loop1/F
-    $bond:AE2 @bond:b1   $atom:Edge1/A   $atom:Loop2/E
-    $bond:BF2 @bond:b1   $atom:Edge1/B   $atom:Loop2/F
+  $bond:AE1  @bond:C-C  $atom:Edge1/A  $atom:Loop1/E
+  $bond:BF1  @bond:C-C  $atom:Edge1/B  $atom:Loop1/F
+  $bond:AE2  @bond:C-C  $atom:Edge1/A  $atom:Loop2/E
+  $bond:BF2  @bond:C-C  $atom:Edge1/B  $atom:Loop2/F
+}
+# --- Define missing bond coefficients ---
+write_once("Data Bond Coeffs") {
+  @bond:C-C  300.0  1.5
 }

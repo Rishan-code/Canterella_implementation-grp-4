@@ -21,7 +21,7 @@
     ```
 4.  Submit the simulation job to a cluster using the provided script (or run locally):
     ```bash
-    sbatch run.sh
+    sbatch run_simulation.sh
     # For local execution (if LAMMPS is in your PATH):
     # mpirun -np 4 lmp -in in.polymer
     ```

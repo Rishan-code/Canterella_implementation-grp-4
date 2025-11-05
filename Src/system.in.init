@@ -1,0 +1,3 @@
+units real
+atom_style atomic
+boundary p p p

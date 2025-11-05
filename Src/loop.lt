@@ -1,0 +1,25 @@
+# loop.lt
+# Simple 2-atom “loop” molecule for connection
+
+Loop {
+  write("Data Atoms") {
+    $atom:E  @atom:C   0.0  0.0  0.0
+    $atom:F  @atom:C   1.5  0.0  0.0
+  }
+
+  write("Data Bonds") {
+    $bond:1  @bond:C-C  $atom:E  $atom:F
+  }
+
+  write_once("Data Masses") {
+    @atom:C  12.011
+  }
+
+  write_once("Data Bond Coeffs") {
+    @bond:C-C  300.0  1.5
+  }
+
+  write_once("Data Pair Coeffs") {
+    @atom:C  @atom:C  0.1  3.5
+  }
+}

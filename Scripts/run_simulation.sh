@@ -10,5 +10,12 @@ module purge
 module load gnu/8.3.0 openmpi/4.0.2
 module load lammps-openmpi
 
+
+echo "=== Polymer Simulation Started on $(hostname) ==="
+date
+
 # Run LAMMPS in parallel
 mpirun -np 16 lmp -in in.lammps
+
+echo "=== Simulation Finished ==="
+date
