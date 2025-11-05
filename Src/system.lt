@@ -1,0 +1,16 @@
+import "edge.lt"
+import "loop.lt"
+
+# Instantiate molecules
+Edge1  = new Edge
+Loop1  = new Loop        # at z=+1 (as defined)
+Loop2  = new Loop.move(0.0, 0.0, -2.000)  # second loop shifted to z=-1
+
+# Connect the loops to the edge endpoints (A and B)
+write("Data Bonds") {
+    # bond-tag  bond-type  atom1          atom2
+    $bond:AE1 @bond:b1   $atom:Edge1/A   $atom:Loop1/E
+    $bond:BF1 @bond:b1   $atom:Edge1/B   $atom:Loop1/F
+    $bond:AE2 @bond:b1   $atom:Edge1/A   $atom:Loop2/E
+    $bond:BF2 @bond:b1   $atom:Edge1/B   $atom:Loop2/F
+}

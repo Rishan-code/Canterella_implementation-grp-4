@@ -1,0 +1,11 @@
+Edge {
+    write("Data Atoms") {
+        #   atom-tag mol-ID type   charge    x     y    z
+        $atom:A   $mol:.       1      0.0   0.000 0.000 0.000
+        $atom:B   $mol:.       1      0.0   1.000 0.000 0.000
+    }
+    write("Data Bonds") {
+        # bond-tag  bond-type  atom1  atom2
+        $bond:AB  @bond:b1   $atom:A  $atom:B
+    }
+}
