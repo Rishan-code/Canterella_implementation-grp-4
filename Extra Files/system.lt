@@ -9,7 +9,7 @@ Loop2 = new Loop.move(0.0, 0.0, -2.0)
 # --- Global settings ---
 write_once("In Init") {
   units real
-  atom_style atomic
+  atom_style bond
   boundary p p p
 }
 
