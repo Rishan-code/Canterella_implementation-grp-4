@@ -4,8 +4,8 @@ import sys
 from collections import defaultdict
 
 # --- Configuration ---
-original_data_file = '../../Extra Files/basic.data'  # input file
-augmented_data_file = 'theta_shape.data'  # output file
+original_data_file = 'basic.data'            # input file
+augmented_data_file = 'data.spectacle.lammps'  # output file
 dummy_atoms_per_bond = 10  # beads per bond
 arc_height = 1.5  # base curvature height
 # --- End Configuration ---
@@ -154,9 +154,9 @@ def augment_data(data, N, h):
 
         # --- Asymmetric curvature for loops ---
         if (a1, a2) == (1, 2):
-            h_start, h_end = current_h * 0.3, current_h * 1.2
+            h_start, h_end = current_h * 0.3, current_h * 0.7
         elif (a1, a2) == (5, 6):
-            h_start, h_end = current_h * 1.2, current_h * 0.3
+            h_start, h_end = current_h * 0.7, current_h * 0.3
         else:
             h_start = h_end = current_h
 
@@ -193,7 +193,7 @@ def write_augmented_data(filename, atoms, bonds, headers):
         zlo, zhi = np.min(all_pos[:,2])-2, np.max(all_pos[:,2])+2
         f.write(f"{xlo:.4f} {xhi:.4f} xlo xhi\n{ylo:.4f} {yhi:.4f} ylo yhi\n{zlo:.4f} {zhi:.4f} zlo zhi\n\n")
 
-        f.write("Masses\n\n1 1.00\n2 1.00\n\n")
+        f.write("Masses\n\n1 12.011\n2 0.001\n\n")
         f.write("Atoms # atomic\n\n")
         for a in atoms:
             x,y,z = a['pos']

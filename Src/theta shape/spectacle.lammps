@@ -1,59 +1,21 @@
-# Polymer simulation (harmonic bonds + LJ excluded volume)
 units       real
 dimension   3
 atom_style  bond
 boundary    p p p
 
-log             log.kremer
 
-# ==== Input Structure ====
-read_data       theta_shape.data
 
-# ==== Interactions ====
-pair_style      lj/cut 8.0
-pair_coeff      * * 0.1 3.0
 
 bond_style      harmonic
-bond_coeff      * 300.0 1.2
 
-neighbor        1.0 bin
 neigh_modify    delay 0 every 1 check yes
 
-# ==== Soft warm-up to avoid blow-up ====
-pair_style      soft 5.0
-pair_coeff      * * 5.0
-fix             warm all adapt 1 pair soft a * * v_f
-
-
-variable        f equal ramp(0,1)
-run             2000
-unfix warm
-
-# Switch back to LJ after warm-up
-pair_style      lj/cut 8.0
-pair_coeff      * * 0.1 3.0
-
-# ==== Energy Minimization ====
 reset_timestep 0
 min_style cg
-minimize 1.0e-6 1.0e-8 5000 10000
 
-# ==== Equilibration ====
-velocity all create 300.0 12345 mom yes rot yes dist gaussian
-fix       1 all nvt temp 300.0 300.0 100.0
 
-# ==== Compute Rg & Rg^2 ====
-compute     rg all gyration
-variable    Rg2 equal c_rg*c_rg
 
-fix         rgavg all ave/time 1000 10 10000 v_Rg2 file avg_Rg2.dat
 
-# ==== Output ====
-dump        1 all custom 100 dump.lammpstrj id type x y z
-thermo_style custom step temp pe ke etotal press c_rg v_Rg2
 thermo      1000
 
 run         50000
-
-# ==== Save relaxed structure ====
-write_data  relaxed.data
