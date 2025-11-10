@@ -1,8 +1,8 @@
 #!/bin/bash
 #SBATCH --job-name=spectacle_sim
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=8            # 8 MPI tasks (adjust as needed)
-#SBATCH --time=00:45:00                # 45 minutes walltime
+#SBATCH --ntasks-per-node=1            # 8 MPI tasks (adjust as needed)
+#SBATCH --time=00:30:00                # 45 minutes walltime
 #SBATCH --partition=phd_student
 #SBATCH --output=spectacle_sim.out     # Std output file
 #SBATCH --error=spectacle_sim.err      # Std error file

@@ -4,10 +4,10 @@ import sys
 from collections import defaultdict
 
 # --- Configuration ---
-original_data_file = 'basic.data'            # input file
-augmented_data_file = 'data.spectacle.lammps'  # output file
-dummy_atoms_per_bond = 10  # beads per bond
-arc_height = 1.5  # base curvature height
+original_data_file = 'basic.data'          # input file
+augmented_data_file = 'curr.lammps'        # output file
+dummy_atoms_per_bond = 10                  # beads per bond
+arc_height = 1.5                           # base curvature height
 # --- End Configuration ---
 
 
@@ -38,7 +38,8 @@ def parse_lammps_data(filename):
                     try:
                         count = int(tokens[0])
                         data['headers'][tokens[1]] = count
-                    except: pass
+                    except:
+                        pass
                     continue
 
                 if 'atom types' in line:
@@ -60,37 +61,48 @@ def parse_lammps_data(filename):
 
                 # --- detect section ---
                 if tokens[0].lower().startswith('atoms'):
-                    section = 'atoms'; continue
+                    section = 'atoms'
+                    continue
                 if tokens[0].lower().startswith('bonds'):
-                    section = 'bonds'; continue
+                    section = 'bonds'
+                    continue
                 if tokens[0].lower().startswith('angles'):
-                    section = 'angles'; continue
+                    section = 'angles'
+                    continue
 
                 # --- read sections ---
                 if section == 'atoms':
                     if len(tokens) >= 6:
-                        atom_id, mol_id, atom_type = int(tokens[0]), int(tokens[1]), int(tokens[2])
+                        atom_id = int(tokens[0])
+                        mol_id = int(tokens[1])
+                        atom_type = int(tokens[2])
                         x, y, z = float(tokens[3]), float(tokens[4]), float(tokens[5])
                     elif len(tokens) >= 5:
-                        atom_id, mol_id, atom_type = int(tokens[0]), 1, int(tokens[1])
+                        atom_id = int(tokens[0])
+                        mol_id = 1
+                        atom_type = int(tokens[1])
                         x, y, z = float(tokens[2]), float(tokens[3]), float(tokens[4])
                     else:
                         continue
                     data['atoms'].append({'id': atom_id, 'mol': mol_id, 'type': atom_type,
                                           'pos': np.array([x, y, z], dtype=float)})
+
                 elif section == 'bonds':
                     if len(tokens) >= 4:
-                        bid, btype, a1, a2 = int(tokens[0]), int(tokens[1]), int(tokens[2]), int(tokens[3])
+                        bid = int(tokens[0])
+                        btype = int(tokens[1])
+                        a1 = int(tokens[2])
+                        a2 = int(tokens[3])
                         data['bonds'].append({'id': bid, 'type': btype, 'a1': a1, 'a2': a2})
 
         if data['headers']['bond types'] == 0:
             data['headers']['bond types'] = 1
 
     except FileNotFoundError:
-        print(f"Error: File '{filename}' not found.")
+        print(f"❌ Error: File '{filename}' not found.")
         sys.exit(1)
     except Exception as e:
-        print(f"Error reading data: {e}")
+        print(f"❌ Error reading data: {e}")
         sys.exit(1)
 
     return data
@@ -121,7 +133,7 @@ def augment_data(data, N, h):
 
     new_atoms, new_bonds = [], []
     for atom in original_atoms:
-        new_atoms.append({'id': atom['id'], 'mol': 1, 'type': 1, 'pos': np.array(atom['pos'], dtype=float)})
+        new_atoms.append({'id': atom['id'], 'mol': 1, 'type': 1, 'pos': np.copy(atom['pos'])})
 
     current_atom_id = max(a['id'] for a in new_atoms)
     current_bond_id = max(b['id'] for b in original_bonds) if original_bonds else 0
@@ -135,24 +147,24 @@ def augment_data(data, N, h):
         if (a1, a2) == (3, 4):
             out_vector = np.array([0.0, 0.0, 0.0])  # straight bridge
         elif (a1, a2) in [(1, 2), (5, 6)]:
-            out_vector = np.array([1.0, 0.0, 0.0])  # loops → X
+            out_vector = np.array([1.0, 0.0, 0.0])  # outer loops → X
         else:
             y_mid = (atom_pos_map[a1_orig][1] + atom_pos_map[a2_orig][1]) / 2.0
             out_vector = np.array([0.0, 1.0, 0.0]) if y_mid >= 0 else np.array([0.0, -1.0, 0.0])
 
         # --- Curvature scaling ---
         current_h = bond_heights[(a1, a2)]
-        if (a1, a2) in [(1, 2), (5, 6)]:  # outer loops
-            current_h *= 1.5
-        elif (a1, a2) in [(2, 3), (4, 5)]:  # inner loops
-            current_h *= 0.7
+        if (a1, a2) in [(1, 2), (5, 6)]:
+            current_h *= 1.5   # outer loops
+        elif (a1, a2) in [(2, 3), (4, 5)]:
+            current_h *= 0.7   # inner loops
         elif (a1, a2) == (3, 4):
             current_h = 0.0
         bond_heights[(a1, a2)] *= -1
 
         p1, p2 = atom_pos_map[a1_orig], atom_pos_map[a2_orig]
 
-        # --- Asymmetric curvature for loops ---
+        # --- Asymmetric curvature ---
         if (a1, a2) == (1, 2):
             h_start, h_end = current_h * 0.3, current_h * 0.7
         elif (a1, a2) == (5, 6):
@@ -185,22 +197,24 @@ def write_augmented_data(filename, atoms, bonds, headers):
     with open(filename, 'w') as f:
         f.write(f"LAMMPS data file - Spectacle (N={dummy_atoms_per_bond})\n\n")
         f.write(f"{total_atoms} atoms\n{total_bonds} bonds\n0 angles\n\n")
-        f.write(f"2 atom types\n{headers.get('bond types',1)} bond types\n\n")
+        f.write(f"2 atom types\n{headers.get('bond types', 1)} bond types\n\n")
 
         all_pos = np.array([a['pos'] for a in atoms])
-        xlo, xhi = np.min(all_pos[:,0])-2, np.max(all_pos[:,0])+2
-        ylo, yhi = np.min(all_pos[:,1])-2, np.max(all_pos[:,1])+2
-        zlo, zhi = np.min(all_pos[:,2])-2, np.max(all_pos[:,2])+2
+        xlo, xhi = np.min(all_pos[:, 0]) - 2, np.max(all_pos[:, 0]) + 2
+        ylo, yhi = np.min(all_pos[:, 1]) - 2, np.max(all_pos[:, 1]) + 2
+        zlo, zhi = np.min(all_pos[:, 2]) - 2, np.max(all_pos[:, 2]) + 2
         f.write(f"{xlo:.4f} {xhi:.4f} xlo xhi\n{ylo:.4f} {yhi:.4f} ylo yhi\n{zlo:.4f} {zhi:.4f} zlo zhi\n\n")
 
-        f.write("Masses\n\n1 12.011\n2 0.001\n\n")
+        f.write("Masses\n\n1 1.00\n2 1.00\n\n")
         f.write("Atoms # atomic\n\n")
         for a in atoms:
-            x,y,z = a['pos']
+            x, y, z = a['pos']
             f.write(f"{a['id']} {a['mol']} {a['type']} {x:.6f} {y:.6f} {z:.6f}\n")
+
         f.write("\nBonds # bond\n\n")
         for b in bonds:
             f.write(f"{b['id']} {b['type']} {b['a1']} {b['a2']}\n")
+
     print(f"\n✅ Created '{filename}' with {total_atoms} atoms and {total_bonds} bonds.\n")
 
 

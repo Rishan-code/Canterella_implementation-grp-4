@@ -45,7 +45,7 @@ fix       1 all nvt temp 300.0 300.0 100.0
 compute     rg all gyration
 variable    Rg2 equal c_rg*c_rg
 
-fix         rgavg all ave/time 1000 10 10000 v_Rg2 file avg_Rg2_tree.dat
+fix         rgavg all ave/time 100 10 1000 v_Rg2 file avg_Rg2_tree.dat
 
 # ==== Output ====
 dump        1 all custom 100 dump.lammpstrj id type x y z
