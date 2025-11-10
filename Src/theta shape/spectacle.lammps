@@ -1,0 +1,78 @@
+# LAMMPS input for Spectacle polymer (asymmetric double-loop structure)
+# MD + Rg² analysis + summary output
+
+# ---------------- Initialization ----------------
+units           real
+dimension       3
+atom_style      bond
+boundary        p p p
+newton          on
+
+# ---------------- Logging ----------------
+log             log.spectacle.lammps
+
+# ---------------- Read Structure ----------------
+# Use your new asymmetric double-loop data file
+read_data       data.spectacle.lammps
+
+# ---------------- Force Field ----------------
+pair_style      lj/cut 10.0
+pair_coeff      * * 0.1 3.5           # Weak nonbonded interactions
+
+bond_style      harmonic
+bond_coeff      * 300.0 1.5           # Bond stiffness & equilibrium length
+
+# (No angles since visualization structure only)
+
+# ---------------- Neighbor Settings ----------------
+neighbor        0.3 bin
+neigh_modify    delay 0 every 1 check yes
+
+# ---------------- Energy Minimization ----------------
+reset_timestep  0
+min_style       cg
+minimize        1.0e-6 1.0e-8 1000 10000
+
+# ---------------- Velocity Initialization ----------------
+velocity all create 300.0 4928459 mom yes rot yes dist gaussian
+
+# ---------------- NVT Equilibration ----------------
+t_start         300.0
+t_stop          300.0
+tdamp           100.0
+fix             1 all nvt temp ${t_start} ${t_stop} ${tdamp}
+
+# ---------------- Output Trajectory ----------------
+dump            1 all custom 500 dump.spectacle.lammpstrj id type x y z
+dump_modify     1 sort id
+
+# ---------------- Radius of Gyration Calculation ----------------
+compute         RG all gyration
+variable        Rg2 equal c_RG*c_RG
+
+# Time-averaged Rg² (running mean)
+fix             RGavg all ave/time 1000 10 10000 v_Rg2 file avg_Rg2.dat mode scalar
+
+# ---------------- Thermodynamic Output ----------------
+thermo_style    custom step temp pe ke etotal press c_RG v_Rg2 f_RGavg
+thermo          1000
+
+# ---------------- Main Run ----------------
+run             50000
+
+# ---------------- Optional Relaxation (NVE) ----------------
+unfix           1
+fix             2 all nve
+run             10000
+
+# ---------------- Save Final State ----------------
+write_data      spectacle_equilibrated.data
+
+# ---------------- Postprocessing Summary ----------------
+# Compute mean Rg and Rg² from avg_Rg2.dat
+print "---------------------------------------------"
+print "POST-PROCESSING SUMMARY:"
+print "Computing Mean Rg² and Rg from avg_Rg2.dat ..."
+shell awk '{sum+=$1; n++} END {print \"Mean Rg² =\", sum/n, \"\\nMean Rg =\", sqrt(sum/n), \"\\nFrames analyzed:\", n}' avg_Rg2.dat > summary_RG.txt
+print "Results saved to summary_RG.txt"
+print "---------------------------------------------"
