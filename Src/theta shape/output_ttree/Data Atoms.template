@@ -1,6 +1,0 @@
-$/atom:Edge1/A $/mol:Edge1/Edge @/atom:Edge/C 0.0 0.0 0.0
-$/atom:Edge1/B $/mol:Edge1/Edge @/atom:Edge/C 1.5 0.0 0.0
-$/atom:Loop1/E $/mol:Loop1/Loop @/atom:Loop/C 0.0 0.0 0.0
-$/atom:Loop1/F $/mol:Loop1/Loop @/atom:Loop/C 1.5 0.0 0.0
-$/atom:Loop2/E $/mol:Loop2/Loop @/atom:Loop/C 0.0 0.0 -2.0
-$/atom:Loop2/F $/mol:Loop2/Loop @/atom:Loop/C 1.5 0.0 -2.0
