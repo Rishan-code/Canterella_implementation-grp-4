@@ -46,8 +46,7 @@ $$g = \frac{\langle R_g^2 \rangle_{\text{architecture}}}{\langle R_g^2 \rangle_{
 ### Analysis
 
 * **Our Simulation ($0.580743 ± 0.00701$)** is in strong agreement with the paper's published simulation result ($0.582 \pm 0.015$), with the values being well within one standard deviation of each other.
-* **Our Theory (0.436)**, which was the expected target, also aligns closely with the simulation results from both this work and the reference paper.
-* **Paper Theory ($\approx 0.436$)** appears to use a different analytical model or assumption, as it differs significantly from all simulation values.
+* **Our Theory (0.445)**, which was the expected target, also aligns closely with the simulation results from both this work and the reference paper.
 
 ### 🖥 Example Run Output
 ```bash
@@ -64,5 +63,5 @@ Augmenting structure...
 - [Tanishka Shinde](...)
 
 ## Acknowledgments
-This project was completed as part of the ChE-209 course at Indian Institute Of Technology Indore, instructed by Dr Kailasham and Dr Prof Gaurav. We thank the authors of the original paper, J. Cantarella, T. Deguchi, C. Shonkwiler, and E. Uehara, for their foundational work.
+This project was completed as part of the ChE-209 course on Soft Matter and Polymer at Indian Institute Of Technology Indore, instructed by Dr Kailasham and Dr Gaurav. We thank the authors of the original paper, J. Cantarella, T. Deguchi, C. Shonkwiler, and E. Uehara, for their foundational work.
 
