@@ -32,12 +32,22 @@
     # For local execution (if LAMMPS is in your PATH):
     # mpirun -np 4 lmp -in in.polymer
     ```
-## 📊 Results Summary
-| Quantity | Analytical (Theory) | Simulation (Mean ± SE) | 95% CI | Deviation |
-|-----------|--------------------|------------------------|--------|-----------|
-| ⟨Rg²⟩ (Shape) | — | ≈ 28.9 ± 0.07 | [28.7, 29.1] | — |
-| ⟨Rg²⟩ (Tree) | — | ≈ 55.0 ± 0.9 | [53.3, 56.7] | — |
-| **g-factor (Shape/Tree)** | **0.56 (expected)** | **0.53 ± 0.02** | [0.50, 0.56] | **Δ ≈ 0.03** |
+## 📊 Results: g-factor Comparison
+
+This table compares the $g\text{-factor}$ results from our simulation (This Work) with the values from the reference paper. The $g\text{-factor}$ is defined as the ratio of the mean-squared radius of gyration of the architecture to that of the tree:
+
+$$g = \frac{\langle R_g^2 \rangle_{\text{architecture}}}{\langle R_g^2 \rangle_{\text{tree}}}$$
+
+| G (Architecture) | $g$ (Paper, MD) | $g$ (Paper, Theory) | $g$ (This Work, Simulation) | $g$ (This Work, Theory) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tree** (Reference) | 1.0 | 1 | **1.0** | **1** |
+| **Spectacle** (Shape) | $0.546 \pm 0.016$ | $107/245 \approx 0.436$ | **$0.53 \pm 0.02$** | **0.56** |
+
+### Analysis
+
+* **Our Simulation ($0.53 \pm 0.02$)** is in strong agreement with the paper's published simulation result ($0.546 \pm 0.016$), with the values being well within one standard deviation of each other.
+* **Our Theory (0.56)**, which was the expected target, also aligns closely with the simulation results from both this work and the reference paper.
+* **Paper Theory ($\approx 0.436$)** appears to use a different analytical model or assumption, as it differs significantly from all simulation values.
 
 ### 🖥️ Example Run Output
 ```bash
