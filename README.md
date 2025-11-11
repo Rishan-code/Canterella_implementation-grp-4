@@ -58,9 +58,9 @@ Augmenting structure...
 
 ## Contributors
 -[Rishan Gobse](https://github.com/Rishan-code)
-- [Saiteja Vemula](https://github.com/username2)
+- [Saiteja Vemula](https://github.com/saiteja-vemula)
 - [Om Shukla](https://github.com/username3)
-- [Nimai Gaba](...)
+- [Nimai Gaba](https://github.com/NimaiGaba)
 - [Tanishka Shinde](...)
 
 ## Acknowledgments
