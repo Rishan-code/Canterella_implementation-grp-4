@@ -26,7 +26,14 @@
     ```bash
     python launch.py
     ```
-4.  Submit the simulation job to a cluster using the provided script (or run locally):
+5.  By navigating to these folders u can get access to both the theta and tree shape files :
+    ```bash
+    cd Canterella_implementation/Src/theta
+    ```
+    ```bash
+    cd Canterella_implementation/Src/tree
+    ```
+5.  Submit the simulation job to a cluster using the provided script (or run locally):
     ```bash
     sbatch run_simulation.sh
     # For local execution (if LAMMPS is in your PATH):
