@@ -1,0 +1,10 @@
+RG2 & g-factor report
+======================
+Shape file: avg_Rg2_shape.dat
+Tree  file: avg_Rg2_tree.dat
+
+Shape: N=106, mean=29.862285, std=0.069920, SE=0.006791
+Tree : N=49, mean=51.420827, std=4.347675, SE=0.621096
+
+g (propagated) = 0.580743 ± 0.007016
+g (bootstrap) mean=0.580989, 95% CI = [0.567325, 0.594140]

@@ -15,8 +15,8 @@ import sys
 SHAPE_FILE = "avg_Rg2_shape.dat"
 TREE_FILE = "avg_Rg2_tree.dat"
 PREPROCESS_SCRIPT = "preprocess.py"
-ANALYTICAL_G = 0.56  # from paper/theoretical proof
-REPORT_FILE = "final_results_summary.txt"
+ANALYTICAL_G = 0.582  # from paper/theoretical proof
+REPORT_FILE = "../final_results_summary.txt"
 
 def run_preprocess():
     """Runs the preprocessing script to calculate g from simulation data."""

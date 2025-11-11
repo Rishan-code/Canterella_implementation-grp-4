@@ -41,6 +41,11 @@ minimize 1.0e-6 1.0e-8 5000 10000
 velocity all create 300.0 12345 mom yes rot yes dist gaussian
 fix       1 all nvt temp 300.0 300.0 100.0
 
+# NEW: Add a long equilibration run *before* collecting data
+print "=== STARTING EQUILIBRATION RUN ==="
+run         100000
+print "=== EQUILIBRATION FINISHED ==="
+
 # ==== Compute Rg & Rg^2 ====
 compute     rg all gyration
 variable    Rg2 equal c_rg*c_rg
@@ -52,7 +57,7 @@ dump        1 all custom 100 dump.lammpstrj id type x y z
 thermo_style custom step temp pe ke etotal press c_rg v_Rg2
 thermo      1000
 
-run         50000
+run         500000
 
 # ==== Save relaxed structure ====
 write_data  relaxed_tree.data

@@ -1,6 +1,6 @@
 === Final Results Summary ===
 
-Analytical g (theory): 0.580
+Analytical g (theory): 0.560
 Simulation g (mean):   0.581
 Simulation 95% CI:     [0.567, 0.594]
-Absolute difference:   0.001
+Absolute difference:   0.021

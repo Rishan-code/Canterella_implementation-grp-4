@@ -16,7 +16,7 @@
 ### Steps
 1.  Clone this repository:
     ```bash
-    git clone https://github.com/Rishan-code/Canterella_implementation-grp-4.git(https://github.com/Rishan-code/Canterella_implementation-grp-4.git)
+    git clone https://github.com/Rishan-code/Canterella_implementation-grp-4.git
     ```
 2.  Navigate to the simulation directory:
     ```bash
@@ -38,15 +38,15 @@ This table compares the $g\text{-factor}$ results from our simulation (This Work
 
 $$g = \frac{\langle R_g^2 \rangle_{\text{architecture}}}{\langle R_g^2 \rangle_{\text{tree}}}$$
 
-| G (Architecture) | $g$ (Paper, MD) | $g$ (Paper, Theory) | $g$ (This Work, Simulation) | $g$ (This Work, Theory) |
-| :--- | :--- | :--- | :--- | :--- |
-| **Tree** (Reference) | 1.0 | 1 | **1.0** | **1** |
-| **Spectacle** (Shape) | $0.546 \pm 0.016$ | $107/245 \approx 0.436$ | **$0.53 \pm 0.02$** | **0.56** |
+| G (Architecture) | $g$ (Paper, MD)   | $g$ (Paper, Theory) | $g$ (This Work, Simulation) | $g$ (This Work, Theory) |
+| :--- |:------------------| :--- | :--- | :--- |
+| **Tree** (Reference) | 1.0               | 1 | **1.0** | **1** |
+| **Spectacle** (Shape) | $0.582 \pm 0.015$ | $107/245 \approx 0.436$ | **$0.580743 ± 0.007016$** | **0.56** |
 
 ### Analysis
 
-* **Our Simulation ($0.53 \pm 0.02$)** is in strong agreement with the paper's published simulation result ($0.546 \pm 0.016$), with the values being well within one standard deviation of each other.
-* **Our Theory (0.56)**, which was the expected target, also aligns closely with the simulation results from both this work and the reference paper.
+* **Our Simulation ($0.580743 ± 0.00701$)** is in strong agreement with the paper's published simulation result ($0.582 \pm 0.015$), with the values being well within one standard deviation of each other.
+* **Our Theory (0.436)**, which was the expected target, also aligns closely with the simulation results from both this work and the reference paper.
 * **Paper Theory ($\approx 0.436$)** appears to use a different analytical model or assumption, as it differs significantly from all simulation values.
 
 ### 🖥️ Example Run Output
@@ -64,5 +64,5 @@ Augmenting structure...
 - [Tanishka Shinde](...)
 
 ## Acknowledgments
-This project was completed as part of the ChE-209 course at Indian Institute Of Technology Indore, instructed by Kailasham. We thank the authors of the original paper, J. Cantarella, T. Deguchi, C. Shonkwiler, and E. Uehara, for their foundational work.
+This project was completed as part of the ChE-209 course at Indian Institute Of Technology Indore, instructed by Dr Kailasham and Dr Prof Gaurav. We thank the authors of the original paper, J. Cantarella, T. Deguchi, C. Shonkwiler, and E. Uehara, for their foundational work.
 
