@@ -57,7 +57,7 @@ Augmenting structure...
 ```
 
 ## Contributors
--(https://github.com/rishan-code)
+-[Rishan Gobse](https://github.com/Rishan-code)
 - [Saiteja Vemula](https://github.com/username2)
 - [Om Shukla](https://github.com/username3)
 - [Nimai Gaba](...)
