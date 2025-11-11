@@ -38,7 +38,7 @@ This table compares the $g\text{-factor}$ results from our simulation (This Work
 
 $$g = \frac{\langle R_g^2 \rangle_{\text{architecture}}}{\langle R_g^2 \rangle_{\text{tree}}}$$
 
-| G (Architecture) | $g$ (Paper, MD)   | $g$ (Paper, Analytical)     | $g$ (Our Work, MD) | $g$ (Our Work Work, Analytical)     |
+| G (Architecture) | $g$ (Paper, MD)   | $g$ (Paper, Analytical)     | $g$ (Our Work, MD) | $g$ (Our Work, Analytical)     |
 | :--- |:------------------|:------------------------| :--- |:----------------------------|
 | **Tree** (Reference) | 1.0               | 1                       | **1.0** | **1**                       |
 | **Spectacle** (Shape) | $0.582 \pm 0.015$ | $109/245 \approx 0.445$ | **$0.580743 ± 0.007016$** | **$109/245 \approx 0.445$** |
