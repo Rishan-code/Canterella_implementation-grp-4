@@ -1,3 +1,5 @@
 numpy
 matplotlib
-moltemplate
+collection
+subprocess-alive
+os
