@@ -67,7 +67,7 @@ Augmenting structure...
 - [Saiteja Vemula](https://github.com/saiteja-vemula)
 - [Om Shukla](https://github.com/username3)
 - [Nimai Gaba](https://github.com/NimaiGaba)
-- [Tanishka Shinde](...)
+- [Tanishka Shinde](https://github.com/tanishka1313)
 
 ## Acknowledgments
 This project was completed as part of the ChE-209 course on Soft Matter and Polymer at Indian Institute Of Technology Indore, instructed by Dr Kailasham and Dr Gaurav. We thank the authors of the original paper, J. Cantarella, T. Deguchi, C. Shonkwiler, and E. Uehara, for their foundational work.
